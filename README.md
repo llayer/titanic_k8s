@@ -21,7 +21,7 @@ docker ps
 The HTML GUI can then be accessed on localhost:5000 \
 It is also possible to make a request from the CLI:
 ```
- curl http://localhost:5000/titanic/v1/predict_api --request POST --header 'Content-Type: application/json'  \       
+ curl http://localhost:5000/titanic/v1/predict_api --request POST --header 'Content-Type: application/json'       
  --data '{"Pclass": [1], "Sex": ["female"], "Age": [20], "SibSp": [1], "Parch": [0], "Fare": [100], "Embarked": ["S"]}'
 ```
 To stop the container run:
@@ -47,8 +47,8 @@ az acr list --resource-group ak8_knowledge_transfer --query "[].{acrLoginServer:
 Then tag the local docker image with the acrLoginServer-adress (here 'ak8acr.azurecr.io') and push the image to the ACR
 ```
 docker images
-docker tag test-ml-score-api:latest ak8acr.azurecr.io/test-ml-score-api:v1
-docker push ak8acr.azurecr.io/test-ml-score-api:v1
+docker tag html-sklearn-app:latest ak8acr.azurecr.io/html-sklearn-app:v1
+docker push ak8acr.azurecr.io/html-sklearn-app:v1
 ```
 The images on ACR can be listed with:
 ```
@@ -71,8 +71,8 @@ kubectl get nodes
 ```
 The image can then be deployed with the commands:
 ```
-kubectl create deployment test-ml-score-api --image=ak8acr.azurecr.io/test-ml-score-api:v1
-kubectl expose deployment test-ml-score-api --port 5000 --type=LoadBalancer --name test-ml-score-api-lb
+kubectl create deployment html-sklearn-app --image=ak8acr.azurecr.io/html-sklearn-app:v1
+kubectl expose deployment html-sklearn-app --port 5000 --type=LoadBalancer --name html-sklearn-app-lb
 ```
 The status of the pods can be checked with
 ```
@@ -80,7 +80,12 @@ kubectl get pods
 ```
 Find the public IP:
 ```
-kubectl get service test-ml-score-api-lb --watch
+kubectl get service html-sklearn-app-lb --watch
+```
+
+A request can be made via the CLI:
+```
+curl http://20.23.18.73:5000/titanic/v1/predict_api --request POST --header 'Content-Type: application/json' --request POST --header 'Content-Type: application/json'   --data '{"Pclass": [1], "Sex": ["male"], "Age": [32], "SibSp": [1],                      "Parch": [0], "Fare": [100], "Embarked": ["S"]}'
 ```
 Once the Cluster is not needed any more, it can be stopped or deleted with:
 ```
