@@ -21,8 +21,7 @@ docker ps
 The HTML GUI can then be accessed on localhost:5000 \
 It is also possible to make a request from the CLI:
 ```
- curl http://localhost:5000/titanic/v1/predict_api --request POST --header 'Content-Type: application/json'       
- --data '{"Pclass": [1], "Sex": ["female"], "Age": [20], "SibSp": [1], "Parch": [0], "Fare": [100], "Embarked": ["S"]}'
+ curl http://localhost:5000/titanic/v1/predict_api --request POST --header 'Content-Type: application/json' --data '{"Pclass": [1], "Sex": ["female"], "Age": [20], "SibSp": [1], "Parch": [0], "Fare": [100], "Embarked": ["S"]}'
 ```
 To stop the container run:
 ```
@@ -85,7 +84,7 @@ kubectl get service html-sklearn-app-lb --watch
 
 A request can be made via the CLI:
 ```
-curl http://20.23.18.73:5000/titanic/v1/predict_api --request POST --header 'Content-Type: application/json' --request POST --header 'Content-Type: application/json'   --data '{"Pclass": [1], "Sex": ["male"], "Age": [32], "SibSp": [1],                      "Parch": [0], "Fare": [100], "Embarked": ["S"]}'
+curl http://20.23.18.73:5000/titanic/v1/predict_api --request POST --header 'Content-Type: application/json' --request POST --header 'Content-Type: application/json'   --data '{"Pclass": [1], "Sex": ["male"], "Age": [32], "SibSp": [1], "Parch": [0], "Fare": [100], "Embarked": ["S"]}'
 ```
 Once the Cluster is not needed any more, it can be stopped or deleted with:
 ```
