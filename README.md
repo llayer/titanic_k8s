@@ -81,7 +81,7 @@ Find the public IP:
 ```
 kubectl get service html-sklearn-app-lb --watch
 ```
-
+The HTML API can the be accessed via the IP at port 5000, e.g. navigate in the browser to http://20.23.18.73:5000/
 A request can be made via the CLI:
 ```
 curl http://20.23.18.73:5000/titanic/v1/predict_api --request POST --header 'Content-Type: application/json' --request POST --header 'Content-Type: application/json'   --data '{"Pclass": [1], "Sex": ["male"], "Age": [32], "SibSp": [1], "Parch": [0], "Fare": [100], "Embarked": ["S"]}'
