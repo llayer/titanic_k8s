@@ -67,8 +67,19 @@ The connection to the cluster can be checked with:
 ```
 kubectl get nodes
 ```
-
-
+The image can then be deployed with the commands:
+```
+kubectl create deployment test-ml-score-api --image=ak8acr.azurecr.io/test-ml-score-api:v1
+kubectl expose deployment test-ml-score-api --port 5000 --type=LoadBalancer --name test-ml-score-api-lb
+```
+The status of the pods can be checked with
+```
+kubectl get pods
+```
+Find the public IP:
+```
+kubectl get service test-ml-score-api-lb --watch
+```
 Once the Cluster is not needed any more, it can be stopped or deleted with:
 ```
 az aks stop --name ak8sklearn --resource-group ak8_knowledge_transfer
