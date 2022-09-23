@@ -11,7 +11,7 @@ git clone https://github.com/llayer/titanic_k8s.git
 docker build --tag html-sklearn-app deploy
 docker run -it --rm --name html-sklearn-app -p 5000:5000 -d html-sklearn-app
 ```
-The HTML GUI can then be accessed on http/localhost:5000
+The HTML GUI can then be accessed on localhost:5000 <\n>
 It is also possible to make a request from the CLI:
 ```
  curl http://localhost:5000/titanic/v1/predict_api --request POST --header 'Content-Type: application/json'  \       
