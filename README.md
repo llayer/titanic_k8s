@@ -16,6 +16,7 @@ git clone https://github.com/llayer/titanic_k8s.git
 ```
 docker build --tag html-sklearn-app deploy
 docker run -it --rm --name html-sklearn-app -p 5000:5000 -d html-sklearn-app
+docker ps
 ```
 The HTML GUI can then be accessed on localhost:5000 \
 It is also possible to make a request from the CLI:
@@ -45,6 +46,7 @@ az acr list --resource-group ak8_knowledge_transfer --query "[].{acrLoginServer:
 ```
 Then tag the local docker image with the acrLoginServer-adress (here 'ak8acr.azurecr.io') and push the image to the ACR
 ```
+docker images
 docker tag test-ml-score-api:latest ak8acr.azurecr.io/test-ml-score-api:v1
 docker push ak8acr.azurecr.io/test-ml-score-api:v1
 ```
