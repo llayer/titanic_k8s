@@ -1,6 +1,12 @@
 # titanic_k8s
 Repository to test the deployment of a docker image to AKS
 
+## 0. Prerequsites
+To run this tutorial you need to have 
+- Docker Desktop running locally
+- a Bash shell that has the Azure CLI and kubectl installed
+- an Azure Subscription
+
 ## 1. Clone the repository 
 ```
 git clone https://github.com/llayer/titanic_k8s.git
@@ -42,5 +48,34 @@ Then tag the local docker image with the acrLoginServer-adress (here 'ak8acr.azu
 docker tag test-ml-score-api:latest ak8acr.azurecr.io/test-ml-score-api:v1
 docker push ak8acr.azurecr.io/test-ml-score-api:v1
 ```
+The images on ACR can be listed with:
+```
+az acr repository list --name ak8acr --output table
+```
+
+## 4. Deploy to Kubernetes
+Start a Kubernetes Cluster
+```
+az aks create --resource-group ak8_knowledge_transfer --name ak8sklearn --node-count 2 --generate-ssh-keys --attach-acr ak8acr
+```
+Note you need to have Admin/Owner rights to be able to connect to ACR or you need to create a Service Principal \
+To configure kubectl run:
+```
+az aks get-credentials --resource-group ak8_knowledge_transfer --name ak8sklearn
+```
+The connection to the cluster can be checked with:
+```
+kubectl get nodes
+```
+
+
+Once the Cluster is not needed any more, it can be stopped or deleted with:
+```
+az aks stop --name ak8sklearn --resource-group ak8_knowledge_transfer
+az aks delete --name ak8sklearn --resource-group ak8_knowledge_transfer
+```
+
+
+
 
 
