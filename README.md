@@ -23,21 +23,24 @@ docker stop html-sklearn-app
 ```
 
 ## 3. Upload image to Azure Container Registry (ACR)
-Login to Azure via a Webbrowser:
+Login to Azure via a Webbrowser and if not yet done create Resource Group
 ```
 az login
-```
-If not yet done, create a Resource Group
-```
 az group create --name ak8_knowledge_transfer --location westeurope
 ```
-then create an ACR instance
+then create an ACR instance and login
 ```
 az acr create --resource-group ak8_knowledge_transfer --name ak8acr --sku Basic
-```
-and login to the ACR instance
-```
 az acr login --name ak8acr
+```
+Figure out the acrLoginServer-adress of the ACR:
+```
+az acr list --resource-group ak8_knowledge_transfer --query "[].{acrLoginServer:loginServer}" --output table
+```
+Then tag the local docker image with the acrLoginServer-adress (here 'ak8acr.azurecr.io') and push the image to the ACR
+```
+docker tag test-ml-score-api:latest ak8acr.azurecr.io/test-ml-score-api:v1
+docker push ak8acr.azurecr.io/test-ml-score-api:v1
 ```
 
 
