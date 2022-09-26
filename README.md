@@ -19,9 +19,6 @@ pipenv shell
 ```
 Run the app:
 ```
-cd titanic_k8s/deploy
-pipenv install
-pipenv shell
 python api.py
 ```
  
