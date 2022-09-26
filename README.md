@@ -7,9 +7,22 @@ To run this tutorial you need to have
 - a Bash shell that has the Azure CLI and kubectl installed
 - an Azure Subscription
 
-## 1. Clone the repository 
+## 1. Clone the repository and develop locally
 ```
 git clone https://github.com/llayer/titanic_k8s.git
+```
+Install the pipfile (requires a python3.7 version) and open the shell:
+```
+cd titanic_k8s/deploy
+pipenv install
+pipenv shell
+```
+Run the app:
+```
+cd titanic_k8s/deploy
+pipenv install
+pipenv shell
+python api.py
 ```
  
 ## 2. Build docker image and test locally
@@ -92,7 +105,31 @@ az aks stop --name ak8sklearn --resource-group ak8_knowledge_transfer
 az aks delete --name ak8sklearn --resource-group ak8_knowledge_transfer
 ```
 
-
-
+## 5. Scale and update the cluster
+To update the image locally after changes to the code, remove the old one and build a new one
+```
+docker image rm html-sklearn-app
+docker build --tag html-sklearn-app deploy
+```
+Then tag the new image version and push to the ACR:
+```
+docker tag html-sklearn-app:latest ak8acr.azurecr.io/html-sklearn-app:v2
+docker push ak8acr.azurecr.io/html-sklearn-app:v2
+```
+To keep the deployment stable, it is required to scale the pods:
+```
+kubectl scale --replicas=3 deployment/html-sklearn-app
+kubectl get pods
+```
+The new image can then be set via:
+```
+kubectl set image deployment html-sklearn-app html-sklearn-app=ak8acr.azurecr.io/html-sklearn-app:v2
+kubectl get pods
+kubectl scale --replicas=1 deployment/html-sklearn-app
+```
+The public IP can then be obtained via:
+```
+kubectl get service html-sklearn-app-lb --watch
+```
 
 
