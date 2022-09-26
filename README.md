@@ -102,7 +102,7 @@ az aks stop --name ak8sklearn --resource-group ak8_knowledge_transfer
 az aks delete --name ak8sklearn --resource-group ak8_knowledge_transfer
 ```
 
-## 5. Scale and update the cluster
+## 5. Scale and update the app
 To update the image locally after changes to the code, remove the old one and build a new one
 ```
 docker image rm html-sklearn-app
